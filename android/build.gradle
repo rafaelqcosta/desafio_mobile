@@ -8,6 +8,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.3.8'
     }
 }
 
@@ -22,6 +23,13 @@ rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
     project.evaluationDependsOn(':app')
+}
+
+// configuração da versão para o correto funcionamento do Firebase
+rootProject.ext {
+  set('FlutterFire', [
+    FirebaseSDKVersion: '28.3.1'
+  ])
 }
 
 task clean(type: Delete) {
