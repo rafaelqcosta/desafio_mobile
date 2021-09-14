@@ -1,7 +1,19 @@
 import 'package:desafio/app/modules/login/controllers/login_controller.dart';
+import 'package:desafio/app/repositories/auth_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
+import 'package:mockito/annotations.dart';
 
+import '../views/login_view_flow_test.mocks.dart';
+
+@GenerateMocks([AuthRepository])
 main() {
+  final mockAuthRepository = MockAuthRepository();
+
+  Get.create<AuthRepository>(
+    () => MockAuthRepository(),
+  );
+
   late LoginController controller;
 
   setUp(() {
@@ -49,6 +61,28 @@ main() {
       final validarEmail = controller.validarSenha('000000');
       expect(validarEmail,
           equals('* A senha deve conter pelo menos 1 letra e 1 número'));
+    });
+  });
+
+  group('Validação Confirmação de senha -', () {
+    test(
+        'Deve retornar Null se a Confirmação de Senha for digitado corretamente',
+        () {
+      controller.senha.value = 'xxxxx1';
+      final validarSenhaConfirmacao =
+          controller.validarSenhaConfirmacao('xxxxx1');
+      expect(validarSenhaConfirmacao, isNull);
+    });
+    test('Deve retornar uma String se a senha estiver vaiza', () {
+      final validarEmail = controller.validarSenhaConfirmacao('');
+      expect(validarEmail, equals('* Informe a confirmação de senha'));
+    });
+    test('Deve retornar Null se a Confirmação de Senha for digitado errada',
+        () {
+      controller.senha.value = 'xxxxx1';
+      final validarSenhaConfirmacao =
+          controller.validarSenhaConfirmacao('xxxxxx');
+      expect(validarSenhaConfirmacao, equals('* Digite a mesma senha.'));
     });
   });
 }

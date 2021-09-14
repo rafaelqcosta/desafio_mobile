@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "373674443575",
+    "project_id": "desafio-bycoders-3e479",
+    "storage_bucket": "desafio-bycoders-3e479.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:373674443575:android:394fa77b8ccae4e54710b2",
+        "android_client_info": {
+          "package_name": "com.rafaqcostadev.desafio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "373674443575-vujtm11fk5co8ngu2vsvgmhlougmk6aq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rafaqcostadev.desafio",
+            "certificate_hash": "27e256bb129f607b140d9cf98d48a0436b30e0a5"
+          }
+        },
+        {
+          "client_id": "373674443575-4isl4of0apg6lllj496njtd5lii0he8l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8e5yt7aTGI2T62hT5d45TKd4gMmf6lcY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "373674443575-4isl4of0apg6lllj496njtd5lii0he8l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "373674443575-evq4fd23hong6n8vl6ggvfprtu1jb0er.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rafaqcostadev.desafio"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -45,13 +45,53 @@ class LoginView extends GetView<LoginController> {
                   controller.senha.value = value;
                 },
               ),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    //TODO
-                  }
-                },
-                child: Text('Entrar'),
+              Obx(
+                () => Visibility(
+                  key: Key('visibility'),
+                  visible: controller.registrar.value,
+                  child: customTextFormField(
+                    key: 'inputConfirmarSenha',
+                    label: 'confirmar senha',
+                    obscureText: true,
+                    maxLength: 12,
+                    validator: (value) {
+                      return controller.validarSenhaConfirmacao(value);
+                    },
+                    onChanged: (value) {
+                      controller.senhaConfirmacao.value = value;
+                    },
+                  ),
+                ),
+              ),
+              Obx(
+                () => ElevatedButton(
+                  key: Key('submitButton'),
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      final submit = await controller.submit();
+                      if (submit is String)
+                        Get.rawSnackbar(
+                          title: 'Erro:',
+                          message: submit,
+                          duration: Duration(seconds: 5),
+                        );
+                    }
+                  },
+                  child: Text(
+                    controller.registrar.value ? 'Registrar' : 'Entrar',
+                  ),
+                ),
+              ),
+              Obx(
+                () => TextButton(
+                  key: Key('submitRegistrarButton'),
+                  onPressed: () {
+                    controller.registrar.toggle();
+                  },
+                  child: Text(controller.registrar.value
+                      ? 'Cancelar'
+                      : 'Registrar novo usuário.'),
+                ),
               ),
             ],
           ),
