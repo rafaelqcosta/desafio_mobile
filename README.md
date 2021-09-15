@@ -1,13 +1,15 @@
-# Desafio programação - para vaga desenvolvedor Mobile
-Por favor leiam este documento do começo ao fim, com muita atenção.
-O intuito deste teste é avaliar seus conhecimentos técnicos em desenvolvimento mobile.
-Este desafio deve ser feito por você em sua casa. Gaste o tempo que você quiser, porém normalmente você não deve precisar de mais do que algumas horas para finalizar.
+## Desafio Mobile
 
-# Instruções de entrega do desafio
+# Para rodar a aplicação localmente
+instale as dependências
+- flutter pub get
 
-1. Primeiro, faça um fork deste projeto para sua conta no Github (crie uma se você não possuir).
-2. Em seguida, implemente o projeto,tal qual descrito abaixo, utilizando sua linguagem de programação mobile preferida em seu clone local.
-3. Por fim, envie via email o projeto ou o fork/link do projeto para seu contato bycoders_.
+execute
+- flutter run
+
+# Para instalar o app direto no Android
+- baixe e instale: (https://github.com/rafaelqcosta/desafio_mobile/blob/main/app-release.apk)
+
 
 # Descrição do projeto
 
@@ -21,13 +23,7 @@ Este desafio deve ser feito por você em sua casa. Gaste o tempo que você quise
 8. Testar fluxo de login (unit e e2e);
 9. Testar fluxo da home (unit e e2e).
 
-# Avaliação
+obs.: além das views solicitadas, foi criado mais duas com o intuito de apresentar os dados do item 4 e 7.
 
-Seu projeto será avaliado de acordo com os seguintes critérios.
 
-1. Sua aplicação preenche os requerimentos básicos?
-2. Você documentou a maneira de configurar o ambiente e rodar sua aplicação?
-3. Você seguiu as instruções de envio do desafio?
-4. Qualidade e cobertura dos testes unitários.
 
-Adicionalmente, tentaremos verificar a sua familiarização com as bibliotecas padrões (standard libs), bem como sua experiência com programação orientada a objetos a partir da estrutura de seu projeto.
