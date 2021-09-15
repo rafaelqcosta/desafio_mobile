@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ class LoginView extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        /// título do appBar
         title: Text('Login'),
         centerTitle: true,
       ),
@@ -22,6 +24,7 @@ class LoginView extends GetView<LoginController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              /// Input para informar o e-mail
               customTextFormField(
                 key: 'inputEmail',
                 label: 'e-mail',
@@ -33,6 +36,8 @@ class LoginView extends GetView<LoginController> {
                   controller.email.value = value;
                 },
               ),
+
+              /// Input para informar a senha
               customTextFormField(
                 key: 'inputSenha',
                 label: 'senha',
@@ -45,6 +50,10 @@ class LoginView extends GetView<LoginController> {
                   controller.senha.value = value;
                 },
               ),
+
+              /// Input para informar a confirmação de senha
+              /// caso controller.registrar.value seja true
+              /// é envolvida num Obx para controlar a visibilidade do widget
               Obx(
                 () => Visibility(
                   key: Key('visibility'),
@@ -63,12 +72,24 @@ class LoginView extends GetView<LoginController> {
                   ),
                 ),
               ),
+
+              /// Botão para submeter as informações ao controller
               Obx(
                 () => ElevatedButton(
                   key: Key('submitButton'),
                   onPressed: () async {
+                    /// verifica a validação dos campos
                     if (_formKey.currentState!.validate()) {
+                      /// Envia o click ao Analytics
+                      FirebaseAnalytics().logEvent(
+                        name: 'Click on Submit',
+                      );
+
+                      /// chama o método de login e em caso de erro
+                      /// retorna uma String
                       final submit = await controller.submit();
+
+                      /// caso retorne uma string apresenta a informação ao usuário
                       if (submit is String)
                         Get.rawSnackbar(
                           title: 'Erro:',
@@ -77,11 +98,16 @@ class LoginView extends GetView<LoginController> {
                         );
                     }
                   },
+
+                  /// Label do botão - muda de acordo com o controller.registrar.value
                   child: Text(
                     controller.registrar.value ? 'Registrar' : 'Entrar',
                   ),
                 ),
               ),
+
+              /// Botão de mudança da variável controller.registrar.value
+              /// responsável por mudar o estado da view
               Obx(
                 () => TextButton(
                   key: Key('submitRegistrarButton'),
@@ -100,6 +126,7 @@ class LoginView extends GetView<LoginController> {
     );
   }
 
+  /// TextInput customizado
   Widget customTextFormField({
     required String key,
     required String label,

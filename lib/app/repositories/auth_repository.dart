@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:desafio/app/data/store_global.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthRepository  {
+class AuthRepository {
   FirebaseAuth auth = FirebaseAuth.instance;
   late StreamSubscription<User?> userStream;
   UserCredential? userCredential;
@@ -36,8 +36,7 @@ class AuthRepository  {
           .createUserWithEmailAndPassword(email: email, password: senha);
       userAuth = userCredential!.user;
 
-      // Salva dados do usuário store global
-      StoreGlobal().salvarCredenciais(userAuth!);
+      salvarEventoLogin();
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
@@ -61,8 +60,7 @@ class AuthRepository  {
           .signInWithEmailAndPassword(email: email, password: senha);
       userAuth = userCredential!.user;
 
-      // Salva dados do usuário store global
-      StoreGlobal().salvarCredenciais(userAuth!);
+      salvarEventoLogin();
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
@@ -75,5 +73,15 @@ class AuthRepository  {
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future salvarEventoLogin() async {
+    // Salva dados do usuário store global
+    await StoreGlobal().salvarCredenciais(userAuth!);
+
+    /// Rastrear login com sucesso e envia um evento com o UID
+    await FirebaseAnalytics()
+        .setUserProperty(name: "Login", value: userCredential!.user!.uid);
+    await FirebaseAnalytics().setUserId(userCredential!.user!.uid);
   }
 }

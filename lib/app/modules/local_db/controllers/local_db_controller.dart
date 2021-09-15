@@ -19,8 +19,9 @@ class LocalDbController extends GetxController {
   }
 
   Future createUsuario() async {
+    final lastId = usuarioList.value.isNotEmpty ? usuarioList.value.last.id : 0;
     loading(true);
-    final nextId = usuarioList.value.length + 1;
+    final nextId = lastId + 1;
     final email =
         authRepository.userAuth != null ? authRepository.userAuth!.email! : '';
     final localizacao = await getLocalizacaoAtual();

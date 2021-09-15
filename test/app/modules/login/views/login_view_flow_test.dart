@@ -33,28 +33,28 @@ main() {
       ),
     );
 
-    //Acha a instância do LoginController
+    /// Acha a instância do LoginController
     bool test = Get.isRegistered<LoginController>();
     expect(test, true);
     LoginController controller = Get.find();
 
-    //1º passo - apresentar o LoginView
+    /// 1º passo - apresentar o LoginView
     final loginView = find.byType(LoginView);
     expect(loginView, findsOneWidget);
 
-    //2º passo - digitar no campo o e-mail
+    /// 2º passo - digitar no campo o e-mail
     final emailTextFormField =
         find.byWidgetPredicate((widget) => keyMatcher(widget, 'inputEmail'));
     expect(emailTextFormField, findsOneWidget);
     await tester.enterText(emailTextFormField, email);
 
-    //3º passo - digitar no campo o e-mail
+    /// 3º passo - digitar no campo o e-mail
     final senhaTextFormField =
         find.byWidgetPredicate((widget) => keyMatcher(widget, 'inputEmail'));
     expect(senhaTextFormField, findsOneWidget);
     await tester.enterText(senhaTextFormField, senha);
 
-    //4º passo - Clicar no button Entrar
+    /// 4º passo - Clicar no button Entrar
     final button =
         find.byWidgetPredicate((widget) => keyMatcher(widget, 'submitButton'));
 
@@ -65,19 +65,13 @@ main() {
     when(mockAuthRepository.loginUsuario(email: email, senha: senha))
         .thenAnswer((_) async => Future.value(user));
 
-    // when(controller.submit()).thenAnswer((realInvocation) =>
-    //     Future(() => Get.toNamed(Routes.HOME, arguments: user)));
-
     await tester.tap(button);
 
     await tester.pumpAndSettle();
-
-    // // 5º passo - apresentar o LoginView
-    // final homeView = find.byType(HomeView);
-    // expect(homeView, findsOneWidget);
   });
 }
 
+/// Cria um UserCrendential fake
 Future<UserCredential?> credenciais() async {
   try {
     final googleSignIn = MockGoogleSignIn();
@@ -90,7 +84,7 @@ Future<UserCredential?> credenciais() async {
     // Sign in.
     final user = MockUser(
       isAnonymous: false,
-      uid: 'someuid',
+      uid: 'testeId',
       email: 'teste@teste.com',
       displayName: 'Teste',
     );
@@ -98,10 +92,11 @@ Future<UserCredential?> credenciais() async {
     final userCredential = await auth.signInWithCredential(credential);
     return userCredential;
   } catch (e) {
-    print('############# $e');
+    print('Erro ao criar uma credencial Fake: $e');
   }
 }
 
+/// Verifica a igualdade da Key de um Widget
 bool keyMatcher(Widget widget, key) {
   return widget.key == Key(key) ? true : false;
 }

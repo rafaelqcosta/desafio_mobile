@@ -8,34 +8,38 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomeController extends GetxController {
+  /// Get.find recupera a instançia do AuthRepository
   final AuthRepository authRepository = Get.find();
-  final count = 0.obs;
+
+  /// user - amazana informações do usuário logado
   late Rx<User?> user;
+
+  /// loading - usada para rodar um CircularProgressor quando false
   final loading = true.obs;
+
+  /// localizacaoAtual - armazana a posição atual do usuário
+  /// por padrao ela está num ponto fixo mas pode ser alterada
   final localizacaoAtual = const LatLng(-15.8162561, -47.893234).obs;
 
   @override
   Future<void> onInit() async {
     super.onInit();
+
+    /// recupera as informações do usuário
     if (authRepository.userAuth != null) {
       user = authRepository.userAuth.obs;
     }
+
     await getLocalizacaoAtual();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {}
-
+  /// realiza o logout do usuário e retorna ao LoginView
   logout() {
     authRepository.logout();
     Get.offAllNamed(Routes.LOGIN);
   }
 
+  /// pega a localização atual utilizando o Geolocator
   Future getLocalizacaoAtual() async {
     loading(true);
     try {

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:desafio/app/modules/home/controllers/home_controller.dart';
 import 'package:desafio/app/routes/app_pages.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -23,11 +24,14 @@ class _HomeViewState extends State<HomeView> {
     return new Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+
+        ///o título vem do AuthRepository caso seja null é informado ao usuário
         title: Text(controller.user.value != null
             ? controller.user.value!.email!
             : 'Usuário não encontrado'),
         centerTitle: true,
         actions: [
+          ///botão para fazer logout e navegar para o LoginView
           IconButton(
             onPressed: () {
               controller.logout();
@@ -36,7 +40,10 @@ class _HomeViewState extends State<HomeView> {
           ),
         ],
       ),
-      body: GoogleMap(
+      body:
+
+          ///Google Maps
+          GoogleMap(
         mapType: MapType.normal,
         myLocationButtonEnabled: true,
         zoomControlsEnabled: false,
@@ -53,6 +60,7 @@ class _HomeViewState extends State<HomeView> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
+            ///Botão para Navegar para LocalDBView
             TextButton.icon(
               icon: Icon(Icons.data_usage),
               onPressed: () {
@@ -60,12 +68,23 @@ class _HomeViewState extends State<HomeView> {
               },
               label: Text('Local DB'),
             ),
+
+            ///Botão para Navegar para StorageGlobalView
             TextButton.icon(
               icon: Icon(Icons.data_usage),
               onPressed: () {
                 Get.toNamed(Routes.STORAGE_GLOBAL);
               },
               label: Text('Store Global'),
+            ),
+
+            ///Botão para estourar um erro e enviar ao Crashlytics
+            TextButton.icon(
+              icon: Icon(Icons.error),
+              onPressed: () {
+                FirebaseCrashlytics.instance.crash();
+              },
+              label: Text('Test Crashlytics'),
             ),
           ],
         ),
