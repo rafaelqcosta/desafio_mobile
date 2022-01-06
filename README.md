@@ -1,5 +1,7 @@
 ## Desafio Mobile
 
+Challenge to participate in a selection process by the company ByCodersTec. App developed in less than 10 hours, using Google Maps API, Firebase and Local Sotrage
+
 # Para rodar a aplicação localmente
 instale as dependências
 - flutter pub get
